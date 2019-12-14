@@ -65,7 +65,6 @@ namespace SignalRServices.Hubs
             prevData.Remove(user);
             countData.Remove(user);
             await Clients.All.SendAsync("DeleteUserMessage", user);
-            await Clients.All.SendAsync("ReceiveAllMessage", user, JsonConvert.SerializeObject(countData));
         }
     }
 }

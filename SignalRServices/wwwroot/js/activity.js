@@ -87,7 +87,7 @@ connection.on("ReceiveInitMessage", function (message) {
 
 connection.on("DeleteUserMessage", function (user) {
     var element = document.getElementById(user);
-    element.parentNode.removeChild(element);
+    element.parentElement.removeChild(element);
 });
 
 connection.start().then(function () {
