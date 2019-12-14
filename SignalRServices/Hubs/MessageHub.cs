@@ -6,9 +6,14 @@ namespace SignalRServices.Hubs
 {
     public class MessageHub : Hub
     {
-        public int prevNumber { get; set; }
+        public static int prevNumber { get; set; }
 
         public async Task SendMessage(string user, string message)
+        {
+            await Clients.All.SendAsync("ReceiveMessage", user, message);
+        }
+
+        public async Task SendActivityMessage(string user, string message)
         {
             try
             {
@@ -16,13 +21,13 @@ namespace SignalRServices.Hubs
                 int diff = numVal - prevNumber;
                 if (Math.Abs(diff) > 4)
                 {
-                    if(Math.Sign(diff) > 0)
+                    if (Math.Sign(diff) > 0)
                     {
-                        await Clients.All.SendAsync("ReceiveMessage", user, message);
+                        await Clients.All.SendAsync("ReceiveActivityMessage", user, message);
                     }
                     else if (Math.Sign(diff) < 0)
                     {
-                        await Clients.All.SendAsync("ReceiveMessage", user, message);
+                        await Clients.All.SendAsync("ReceiveActivityMessage", user, message);
                     }
                 }
                 prevNumber = numVal;
