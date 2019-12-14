@@ -10,7 +10,7 @@ namespace SignalRServices.Hubs
     {
         public static int prevNumber { get; set; }
 
-        public static Dictionary<string, int> prevData = new Dictionary<string, int> ();
+        public static Dictionary<string, int> prevData = new Dictionary<string, int>();
 
         public async Task SendMessage(string user, string message)
         {
