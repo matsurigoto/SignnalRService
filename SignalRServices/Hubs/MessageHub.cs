@@ -25,6 +25,7 @@ namespace SignalRServices.Hubs
                         await Clients.All.SendAsync("ReceiveMessage", user, message);
                     }
                 }
+                prevNumber = numVal;
             }
             catch (FormatException e)
             {
