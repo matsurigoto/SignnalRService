@@ -2,15 +2,18 @@
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/messageHub").build();
 
+connection.on("DeleteUserMessage", function (user) {
+    console.log("------");
+});
+
 connection.on("ReceiveAllMessage", function (user, message) {
 
     console.log(message);
     var person = JSON.parse(message);
     var containerHtml = document.querySelector('.player-result');
+    console.log(containerHtml);
     Object.keys(person).forEach(key => {
-        console.log(containerHtml);
         var userDom = containerHtml.querySelector(`#${key}`);
-        console.log(userDom);
         if (!userDom) {
 
             var a = Math.floor(Math.random() * Math.floor(2));
@@ -28,7 +31,7 @@ connection.on("ReceiveAllMessage", function (user, message) {
             userDom.innerHTML = `
                 <p class="player">${key.replace('user','')}</p>
                 <p>次數:<span class="count">0</span></p>
-                <div><img id="image${key}" src="${walk}" /></div>
+                <div><img id="image${key}" src="${walk}" width="300px" /></div>
             `;
             containerHtml.appendChild(userDom);
         }
@@ -49,7 +52,6 @@ connection.on("ReceiveAllMessage", function (user, message) {
     
     
 });
-
 
 connection.on("ReceiveInitMessage", function (message) {
 
@@ -76,7 +78,7 @@ connection.on("ReceiveInitMessage", function (message) {
             userDom.innerHTML = `
                 <p class="player">${key.replace('user', '')}</p>
                 <p>次數:<span class="count">0</span></p>
-                <div><img id="image${key}" src="${walk}" /></div>
+                <div><img id="image${key}" src="${walk}" width="300px"/></div>
             `;
             containerHtml.appendChild(userDom);
         }
@@ -85,10 +87,7 @@ connection.on("ReceiveInitMessage", function (message) {
     });
 });
 
-connection.on("DeleteUserMessage", function (user) {
-    var element = document.getElementById(user);
-    element.parentElement.removeChild(element);
-});
+
 
 connection.start().then(function () {
     connection.invoke("GetInitMessage").catch(function (err) {
