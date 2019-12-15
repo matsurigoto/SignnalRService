@@ -59,7 +59,7 @@ namespace SignalRServices.Hubs
             }
         }
 
-        public async Task RemoveUser(string user)
+        public async Task RemoveUserMessage(string user)
         {
             user = "user" + user;
             prevData.Remove(user);
